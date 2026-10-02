@@ -1,0 +1,3875 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)file:///C:/Users/TechTimeIQ/AppData/Roaming/JetBrains/PyCharm2025.3/scratches/vv.html -->
+<html lang="ar" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GYM PRO</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Tahoma,Arial,sans-serif;
+}
+
+:root{
+    --green:#39ff14;
+    --blue:#00d9ff;
+    --dark:#05090e;
+    --dark2:#0b121a;
+    --card:#111b25;
+    --gray:#8795a4;
+    --white:#f5f7fa;
+    --red:#ff3b5c;
+    --border:rgba(0,217,255,.16);
+}
+
+body{
+    min-height:100vh;
+    color:var(--white);
+
+    background:
+        radial-gradient(circle at 10% 10%,rgba(57,255,20,.07),transparent 25%),
+        radial-gradient(circle at 90% 20%,rgba(0,217,255,.08),transparent 25%),
+        linear-gradient(135deg,#05080c,#0a1017 50%,#06090d);
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);
+
+    background-size:45px 45px;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+
+    padding:20px 5%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(5,9,14,.85);
+    backdrop-filter:blur(15px);
+
+    border-bottom:1px solid rgba(57,255,20,.12);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-icon{
+    width:46px;
+    height:46px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border:2px solid var(--green);
+    border-radius:13px;
+
+    box-shadow:0 0 20px rgba(57,255,20,.25);
+
+    animation:pulse 2s infinite;
+}
+
+.logo h1{
+    font-size:21px;
+}
+
+.logo span{
+    color:var(--green);
+}
+
+.reset-btn{
+    padding:10px 15px;
+
+    background:rgba(255,59,92,.08);
+    color:#ff7189;
+
+    border:1px solid rgba(255,59,92,.25);
+    border-radius:10px;
+
+    cursor:pointer;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    text-align:center;
+    padding:55px 5% 25px;
+}
+
+.hero h2{
+    font-size:clamp(30px,5vw,55px);
+    margin-bottom:15px;
+}
+
+.hero h2 span{
+    color:var(--green);
+    text-shadow:0 0 25px rgba(57,255,20,.3);
+}
+
+.hero p{
+    max-width:700px;
+    margin:auto;
+    color:var(--gray);
+    line-height:1.8;
+}
+
+/* ================= STREAK ================= */
+
+.streak-container{
+    width:90%;
+    max-width:1100px;
+    margin:25px auto;
+
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:18px;
+}
+
+.streak-card{
+    background:linear-gradient(145deg,#111b25,#091018);
+
+    border:1px solid rgba(57,255,20,.2);
+
+    border-radius:22px;
+
+    padding:25px;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.streak-card::before{
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    background:var(--green);
+
+    filter:blur(100px);
+
+    opacity:.06;
+
+    top:-100px;
+    right:-70px;
+}
+
+.streak-main{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.streak-number{
+    font-size:58px;
+    font-weight:bold;
+    color:var(--green);
+
+    text-shadow:0 0 25px rgba(57,255,20,.25);
+}
+
+.streak-label{
+    color:var(--gray);
+    margin-top:5px;
+}
+
+.attendance-btn{
+    padding:17px 25px;
+
+    background:linear-gradient(135deg,var(--green),#21d600);
+
+    color:#031004;
+
+    border:none;
+    border-radius:13px;
+
+    font-size:17px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:0 0 25px rgba(57,255,20,.15);
+
+    transition:.25s;
+}
+
+.attendance-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(57,255,20,.2);
+}
+
+.attendance-btn.disabled{
+    background:#26313b;
+    color:#718090;
+    cursor:not-allowed;
+    box-shadow:none;
+}
+
+.streak-info{
+    margin-top:18px;
+
+    color:#7d8b99;
+
+    font-size:12px;
+
+    line-height:1.8;
+}
+
+.best-streak{
+    margin-top:8px;
+    color:var(--blue);
+}
+
+/* ================= ATTENDANCE HISTORY ================= */
+
+.attendance-history{
+    background:linear-gradient(145deg,#111b25,#091018);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    padding:22px;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:15px;
+}
+
+.section-title h3{
+    font-size:17px;
+}
+
+.history-list{
+    max-height:190px;
+    overflow-y:auto;
+}
+
+.history-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:10px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+
+    font-size:12px;
+}
+
+.history-item:last-child{
+    border-bottom:none;
+}
+
+.history-date{
+    color:#c4ced8;
+}
+
+.history-time{
+    color:var(--green);
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    width:90%;
+    max-width:1200px;
+
+    margin:25px auto;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    gap:15px;
+}
+
+.stat{
+    padding:20px;
+
+    text-align:center;
+
+    background:linear-gradient(145deg,#111a24,#080e14);
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+
+    transition:.3s;
+}
+
+.stat:hover{
+    transform:translateY(-4px);
+}
+
+.stat .number{
+    display:block;
+
+    color:var(--green);
+
+    font-size:27px;
+    font-weight:bold;
+
+    margin-bottom:5px;
+}
+
+.stat .label{
+    color:var(--gray);
+    font-size:12px;
+}
+
+/* ================= CONTROLS ================= */
+
+.controls{
+    width:90%;
+    max-width:1200px;
+
+    margin:30px auto;
+
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+
+    gap:10px;
+}
+
+.search{
+    flex:1;
+    min-width:230px;
+    max-width:500px;
+}
+
+.search input{
+    width:100%;
+
+    padding:13px 16px;
+
+    background:#0d151e;
+
+    color:white;
+
+    border:1px solid var(--border);
+    border-radius:11px;
+
+    outline:none;
+}
+
+.search input:focus{
+    border-color:var(--green);
+}
+
+.filter-btn{
+    padding:12px 16px;
+
+    background:#111a24;
+
+    color:#aeb9c4;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    cursor:pointer;
+}
+
+.filter-btn.active,
+.filter-btn:hover{
+    background:var(--green);
+    color:#031004;
+    border-color:var(--green);
+}
+
+/* ================= CATEGORIES ================= */
+
+.categories{
+    width:90%;
+    max-width:1400px;
+
+    margin:40px auto 80px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:25px;
+}
+
+.category{
+    padding:24px;
+
+    background:rgba(9,15,22,.78);
+
+    border:1px solid rgba(0,217,255,.13);
+
+    border-radius:23px;
+}
+
+.category-header{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+.category-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.category-icon{
+    width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(57,255,20,.07);
+
+    border:1px solid rgba(57,255,20,.18);
+
+    border-radius:12px;
+
+    font-size:21px;
+}
+
+.category-count{
+    color:#6e7c8a;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.add-btn{
+    padding:11px 17px;
+
+    background:linear-gradient(135deg,var(--green),#21d600);
+
+    color:#031004;
+
+    border:none;
+    border-radius:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.add-btn:hover{
+    transform:translateY(-2px);
+}
+
+/* ================= DEVICES ================= */
+
+.devices{
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(280px,1fr));
+
+    gap:18px;
+}
+
+.device-card{
+    overflow:hidden;
+
+    background:linear-gradient(145deg,#111b25,#0a1118);
+
+    border:1px solid rgba(0,217,255,.14);
+
+    border-radius:18px;
+
+    transition:.3s;
+}
+
+.device-card:hover{
+    transform:translateY(-5px);
+
+    border-color:rgba(57,255,20,.35);
+
+    box-shadow:0 18px 40px rgba(0,0,0,.25);
+}
+
+.device-image{
+    height:185px;
+
+    position:relative;
+
+    background:#070c11;
+}
+
+.device-image img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+.no-image{
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    flex-direction:column;
+
+    color:#667583;
+}
+
+.no-image span{
+    font-size:42px;
+}
+
+.device-actions{
+    position:absolute;
+
+    top:10px;
+    left:10px;
+
+    display:flex;
+    gap:6px;
+}
+
+.icon-btn{
+    width:34px;
+    height:34px;
+
+    border-radius:9px;
+
+    background:rgba(0,0,0,.72);
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    cursor:pointer;
+}
+
+.device-body{
+    padding:17px;
+}
+
+.device-name{
+    font-size:18px;
+    margin-bottom:6px;
+}
+
+.device-description{
+    color:#778797;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+    margin-bottom:15px;
+}
+
+.inputs-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:7px;
+}
+
+.input-box label{
+    display:block;
+
+    color:#718090;
+
+    font-size:10px;
+
+    margin-bottom:5px;
+}
+
+.input-box input{
+    width:100%;
+
+    padding:9px 4px;
+
+    text-align:center;
+
+    background:#080e14;
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:8px;
+
+    outline:none;
+}
+
+.input-box input:focus{
+    border-color:var(--blue);
+}
+
+.history-button{
+    width:100%;
+
+    margin-top:12px;
+
+    padding:10px;
+
+    border-radius:9px;
+
+    background:rgba(0,217,255,.07);
+
+    border:1px solid rgba(0,217,255,.15);
+
+    color:var(--blue);
+
+    cursor:pointer;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+    min-height:130px;
+
+    border:1px dashed rgba(139,154,170,.2);
+
+    border-radius:15px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    flex-direction:column;
+
+    gap:7px;
+
+    color:#677584;
+}
+
+.empty-icon{
+    font-size:30px;
+}
+
+/* ================= MODAL ================= */
+
+.modal-overlay{
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.8);
+
+    backdrop-filter:blur(8px);
+
+    z-index:1000;
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:600px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    background:#0d151e;
+
+    border:1px solid rgba(57,255,20,.2);
+
+    border-radius:21px;
+
+    box-shadow:0 25px 80px rgba(0,0,0,.6);
+}
+
+.modal-header{
+    padding:20px;
+
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.close-modal{
+    width:34px;
+    height:34px;
+
+    border:none;
+    border-radius:8px;
+
+    background:#18212b;
+
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
+
+    color:#aeb9c4;
+
+    font-size:13px;
+
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+
+    padding:12px;
+
+    background:#080e14;
+
+    color:white;
+
+    border:1px solid rgba(0,217,255,.16);
+
+    border-radius:9px;
+
+    outline:none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:var(--green);
+}
+
+.form-row{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
+}
+
+.upload-area{
+    display:block;
+
+    padding:20px;
+
+    text-align:center;
+
+    border:2px dashed rgba(0,217,255,.2);
+
+    border-radius:13px;
+
+    cursor:pointer;
+}
+
+.upload-area input{
+    display:none;
+}
+
+.upload-icon{
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.upload-text{
+    color:#8795a4;
+    font-size:12px;
+}
+
+.image-preview{
+    display:none;
+
+    margin-top:12px;
+
+    position:relative;
+}
+
+.image-preview img{
+    width:100%;
+    max-height:220px;
+
+    object-fit:cover;
+
+    border-radius:11px;
+}
+
+.remove-image{
+    position:absolute;
+
+    top:8px;
+    left:8px;
+
+    width:31px;
+    height:31px;
+
+    background:var(--red);
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+}
+
+.modal-footer{
+    padding:17px 20px;
+
+    display:flex;
+    justify-content:flex-end;
+
+    gap:9px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+}
+
+.cancel-btn,
+.save-btn{
+    padding:11px 18px;
+
+    border:none;
+
+    border-radius:9px;
+
+    cursor:pointer;
+}
+
+.cancel-btn{
+    background:#18212b;
+    color:#aeb9c4;
+}
+
+.save-btn{
+    background:var(--green);
+    color:#031004;
+    font-weight:bold;
+}
+
+/* ================= WORKOUT HISTORY MODAL ================= */
+
+.workout-history-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.workout-history-item{
+    padding:15px;
+
+    background:#080e14;
+
+    border:1px solid rgba(0,217,255,.1);
+
+    border-radius:12px;
+}
+
+.workout-history-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.workout-date{
+    color:var(--green);
+    font-size:12px;
+}
+
+.workout-values{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:8px;
+
+    margin-top:12px;
+}
+
+.workout-value{
+    padding:9px;
+
+    text-align:center;
+
+    background:#101923;
+
+    border-radius:8px;
+}
+
+.workout-value small{
+    display:block;
+
+    color:#697786;
+
+    font-size:9px;
+
+    margin-bottom:3px;
+}
+
+.delete-history{
+    margin-top:10px;
+
+    padding:7px 10px;
+
+    background:rgba(255,59,92,.08);
+
+    color:#ff7189;
+
+    border:1px solid rgba(255,59,92,.2);
+
+    border-radius:7px;
+
+    cursor:pointer;
+}
+
+.no-history{
+    padding:35px 10px;
+
+    text-align:center;
+
+    color:#687786;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+
+    bottom:25px;
+    left:25px;
+
+    padding:13px 18px;
+
+    background:#111c26;
+
+    border:1px solid rgba(57,255,20,.3);
+
+    border-radius:11px;
+
+    opacity:0;
+
+    transform:translateY(80px);
+
+    transition:.3s;
+
+    z-index:2000;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes pulse{
+
+    0%,100%{
+        box-shadow:0 0 15px rgba(57,255,20,.15);
+    }
+
+    50%{
+        box-shadow:0 0 30px rgba(57,255,20,.35);
+    }
+
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:850px){
+
+    .streak-container{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:550px){
+
+    .category-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .add-btn{
+        width:100%;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .streak-main{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .attendance-btn{
+        width:100%;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🏋️
+        </div>
+
+        <h1>
+            GYM <span>PRO</span>
+        </h1>
+
+    </div>
+
+    <button class="reset-btn" onclick="deleteAllDevices()">
+        🗑️ حذف كل الأجهزة
+    </button>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <h2>
+        نظام <span>تمارينك</span>
+    </h2>
+
+    <p>
+        سجل تمارينك، تابع أوزانك، واحفظ تاريخ كل جلسة.
+        وخلّي الـ Streak يحفزك على الاستمرار.
+    </p>
+
+</section>
+
+
+<!-- ================= STREAK ================= -->
+
+<section class="streak-container">
+
+    <div class="streak-card">
+
+        <div class="streak-main">
+
+            <div>
+
+                <div class="streak-number" id="streakNumber">1</div>
+
+                <div class="streak-label">
+                    🔥 أيام متتالية في الجيم
+                </div>
+
+                <div class="best-streak" id="bestStreak">أعلى Streak: 1</div>
+
+            </div>
+
+
+            <button id="attendanceBtn" class="attendance-btn disabled" onclick="markAttendance()" disabled="">✓ تم الحضور</button>
+
+        </div>
+
+
+        <div class="streak-info" id="streakInfo">آخر حضور: ٠٢‏/١٠‏/٢٠٢٦، ٠٣:٥٣ ص
+                — يمكنك تسجيل الحضور القادم بعد حوالي 12 ساعة.</div>
+
+    </div>
+
+
+    <!-- ATTENDANCE HISTORY -->
+
+    <div class="attendance-history">
+
+        <div class="section-title">
+
+            <h3>
+                📅 سجل الحضور
+            </h3>
+
+            <span id="attendanceCount">1</span>
+
+        </div>
+
+        <div class="history-list" id="attendanceHistory">
+
+                        <div class="history-item">
+
+                            <span class="history-date">
+
+                                🔥 
+
+                                ٠٢‏/١٠‏/٢٠٢٦، ٠٣:٥٣ ص
+
+                            </span>
+
+
+                            <span class="history-time">
+                                حاضر ✓
+                            </span>
+
+                        </div>
+
+                    </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <span class="number" id="totalDevices">0</span>
+
+        <span class="label">
+            عدد الأجهزة
+        </span>
+
+    </div>
+
+
+    <div class="stat">
+
+        <span class="number" id="totalSets">0</span>
+
+        <span class="label">
+            مجموع الـ Sets
+        </span>
+
+    </div>
+
+
+    <div class="stat">
+
+        <span class="number" id="totalReps">0</span>
+
+        <span class="label">
+            مجموع الـ Reps
+        </span>
+
+    </div>
+
+
+    <div class="stat">
+
+        <span class="number" id="totalWeight">0</span>
+
+        <span class="label">
+            مجموع الأوزان
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SEARCH ================= -->
+
+<div class="controls">
+
+    <div class="search">
+
+        <input id="searchInput" type="text" placeholder="🔎 ابحث عن جهاز..." oninput="renderAll()">
+
+    </div>
+
+
+    <button class="filter-btn active" data-filter="all">
+        الكل
+    </button>
+
+    <button class="filter-btn" data-filter="chest">
+        الصدر
+    </button>
+
+    <button class="filter-btn" data-filter="back">
+        الظهر
+    </button>
+
+    <button class="filter-btn" data-filter="shoulders">
+        الأكتاف
+    </button>
+
+    <button class="filter-btn" data-filter="arms">
+        الذراع
+    </button>
+
+    <button class="filter-btn" data-filter="legs">
+        الأرجل
+    </button>
+
+    <button class="filter-btn" data-filter="forearms">
+        السواعد
+    </button>
+
+    <button class="filter-btn" data-filter="abs">
+        البطن
+    </button>
+
+</div>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<main class="categories" id="categories"><section class="category">
+
+            <div class="category-header">
+
+                <div class="category-title">
+
+                    <div class="category-icon">
+                        💪
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            عضلات الصدر
+                        </h3>
+
+                        <div class="category-count">
+                            0 جهاز
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button class="add-btn" onclick="openAddDevice('chest')">
+                    ＋ إضافة جهاز
+                </button>
+
+            </div>
+
+
+            <div class="devices">
+
+                
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🏋️
+                        </div>
+
+                        <div>
+                            لا يوجد أجهزة مضافة
+                        </div>
+
+                        <button class="add-btn" onclick="openAddDevice('chest')">
+                            + أضف أول جهاز
+                        </button>
+
+                    </div>
+
+                    
+
+            </div>
+
+        </section><section class="category">
+
+            <div class="category-header">
+
+                <div class="category-title">
+
+                    <div class="category-icon">
+                        🦾
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            عضلات الظهر
+                        </h3>
+
+                        <div class="category-count">
+                            0 جهاز
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button class="add-btn" onclick="openAddDevice('back')">
+                    ＋ إضافة جهاز
+                </button>
+
+            </div>
+
+
+            <div class="devices">
+
+                
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🏋️
+                        </div>
+
+                        <div>
+                            لا يوجد أجهزة مضافة
+                        </div>
+
+                        <button class="add-btn" onclick="openAddDevice('back')">
+                            + أضف أول جهاز
+                        </button>
+
+                    </div>
+
+                    
+
+            </div>
+
+        </section><section class="category">
+
+            <div class="category-header">
+
+                <div class="category-title">
+
+                    <div class="category-icon">
+                        🏋️
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            عضلات الأكتاف
+                        </h3>
+
+                        <div class="category-count">
+                            0 جهاز
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button class="add-btn" onclick="openAddDevice('shoulders')">
+                    ＋ إضافة جهاز
+                </button>
+
+            </div>
+
+
+            <div class="devices">
+
+                
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🏋️
+                        </div>
+
+                        <div>
+                            لا يوجد أجهزة مضافة
+                        </div>
+
+                        <button class="add-btn" onclick="openAddDevice('shoulders')">
+                            + أضف أول جهاز
+                        </button>
+
+                    </div>
+
+                    
+
+            </div>
+
+        </section><section class="category">
+
+            <div class="category-header">
+
+                <div class="category-title">
+
+                    <div class="category-icon">
+                        💪
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            عضلات الذراع
+                        </h3>
+
+                        <div class="category-count">
+                            0 جهاز
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button class="add-btn" onclick="openAddDevice('arms')">
+                    ＋ إضافة جهاز
+                </button>
+
+            </div>
+
+
+            <div class="devices">
+
+                
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🏋️
+                        </div>
+
+                        <div>
+                            لا يوجد أجهزة مضافة
+                        </div>
+
+                        <button class="add-btn" onclick="openAddDevice('arms')">
+                            + أضف أول جهاز
+                        </button>
+
+                    </div>
+
+                    
+
+            </div>
+
+        </section><section class="category">
+
+            <div class="category-header">
+
+                <div class="category-title">
+
+                    <div class="category-icon">
+                        🦵
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            عضلات الأرجل
+                        </h3>
+
+                        <div class="category-count">
+                            0 جهاز
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button class="add-btn" onclick="openAddDevice('legs')">
+                    ＋ إضافة جهاز
+                </button>
+
+            </div>
+
+
+            <div class="devices">
+
+                
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🏋️
+                        </div>
+
+                        <div>
+                            لا يوجد أجهزة مضافة
+                        </div>
+
+                        <button class="add-btn" onclick="openAddDevice('legs')">
+                            + أضف أول جهاز
+                        </button>
+
+                    </div>
+
+                    
+
+            </div>
+
+        </section><section class="category">
+
+            <div class="category-header">
+
+                <div class="category-title">
+
+                    <div class="category-icon">
+                        ✊
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            عضلات السواعد
+                        </h3>
+
+                        <div class="category-count">
+                            0 جهاز
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button class="add-btn" onclick="openAddDevice('forearms')">
+                    ＋ إضافة جهاز
+                </button>
+
+            </div>
+
+
+            <div class="devices">
+
+                
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🏋️
+                        </div>
+
+                        <div>
+                            لا يوجد أجهزة مضافة
+                        </div>
+
+                        <button class="add-btn" onclick="openAddDevice('forearms')">
+                            + أضف أول جهاز
+                        </button>
+
+                    </div>
+
+                    
+
+            </div>
+
+        </section><section class="category">
+
+            <div class="category-header">
+
+                <div class="category-title">
+
+                    <div class="category-icon">
+                        🔥
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            عضلات البطن
+                        </h3>
+
+                        <div class="category-count">
+                            0 جهاز
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button class="add-btn" onclick="openAddDevice('abs')">
+                    ＋ إضافة جهاز
+                </button>
+
+            </div>
+
+
+            <div class="devices">
+
+                
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🏋️
+                        </div>
+
+                        <div>
+                            لا يوجد أجهزة مضافة
+                        </div>
+
+                        <button class="add-btn" onclick="openAddDevice('abs')">
+                            + أضف أول جهاز
+                        </button>
+
+                    </div>
+
+                    
+
+            </div>
+
+        </section></main>
+
+
+<!-- ================= ADD DEVICE MODAL ================= -->
+
+<div class="modal-overlay" id="deviceModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h3 id="modalTitle">
+                إضافة جهاز
+            </h3>
+
+            <button class="close-modal" onclick="closeDeviceModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="form-group">
+
+                <label>
+                    اسم الجهاز *
+                </label>
+
+                <input id="deviceName" type="text" placeholder="مثال: جهاز ضغط الصدر">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    القسم
+                </label>
+
+                <select id="deviceCategory">
+
+                    <option value="chest">
+                        💪 الصدر
+                    </option>
+
+                    <option value="back">
+                        🦾 الظهر
+                    </option>
+
+                    <option value="shoulders">
+                        🏋️ الأكتاف
+                    </option>
+
+                    <option value="arms">
+                        💪 الذراع
+                    </option>
+
+                    <option value="legs">
+                        🦵 الأرجل
+                    </option>
+
+                    <option value="forearms">
+                        ✊ السواعد
+                    </option>
+
+                    <option value="abs">
+                        🔥 البطن
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    وصف الجهاز
+                </label>
+
+                <textarea id="deviceDescription" rows="3" placeholder="وصف الجهاز..."></textarea>
+
+            </div>
+
+
+            <!-- IMAGE -->
+
+            <div class="form-group">
+
+                <label>
+                    صورة الجهاز
+                </label>
+
+                <label class="upload-area">
+
+                    <input id="deviceImage" type="file" accept="image/*">
+
+                    <div class="upload-icon">
+                        📷
+                    </div>
+
+                    <div class="upload-text">
+                        اضغط لاختيار صورة الجهاز
+                    </div>
+
+                </label>
+
+
+                <div class="image-preview" id="imagePreview">
+
+                    <img id="previewImg" src="file:///C:/Users/TechTimeIQ/AppData/Roaming/JetBrains/PyCharm2025.3/scratches/vv.html">
+
+                    <button class="remove-image" onclick="removeImage()">
+                        ×
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button class="cancel-btn" onclick="closeDeviceModal()">
+                إلغاء
+            </button>
+
+            <button class="save-btn" onclick="saveDevice()">
+                💾 حفظ
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= WORKOUT HISTORY MODAL ================= -->
+
+<div class="modal-overlay" id="historyModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h3 id="historyTitle">
+                سجل التمارين
+            </h3>
+
+            <button class="close-modal" onclick="closeHistoryModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="workout-history-list" id="workoutHistoryList">
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button class="cancel-btn" onclick="closeHistoryModal()">
+                إغلاق
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ADD WORKOUT MODAL ================= -->
+
+<div class="modal-overlay" id="workoutModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h3 id="workoutTitle">
+                تسجيل تمرين
+            </h3>
+
+            <button class="close-modal" onclick="closeWorkoutModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <p id="workoutDeviceName" style="
+                    color:var(--green);
+                    margin-bottom:18px;
+                    font-weight:bold;
+                "></p>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>
+                        Sets
+                    </label>
+
+                    <input id="workoutSets" type="number" min="0" value="4">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Weight - KG
+                    </label>
+
+                    <input id="workoutWeight" type="number" min="0" step="0.5" value="50">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Reps
+                    </label>
+
+                    <input id="workoutReps" type="number" min="0" value="5">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button class="cancel-btn" onclick="closeWorkoutModal()">
+                إلغاء
+            </button>
+
+            <button class="save-btn" onclick="saveWorkout()">
+                💾 حفظ التمرين
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div class="toast" id="toast">تم تسجيل حضورك 💪🔥</div>
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const DEVICES_KEY = "gymProDevicesV3";
+const ATTENDANCE_KEY = "gymProAttendanceV3";
+
+
+let devices =
+    JSON.parse(
+        localStorage.getItem(DEVICES_KEY) || "[]"
+    );
+
+
+let attendance =
+    JSON.parse(
+        localStorage.getItem(ATTENDANCE_KEY) || "[]"
+    );
+
+
+let editingDeviceId = null;
+let currentImage = "";
+
+let selectedWorkoutDeviceId = null;
+let historyDeviceId = null;
+
+let activeFilter = "all";
+
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+const categories = [
+
+    {
+        id:"chest",
+        name:"عضلات الصدر",
+        icon:"💪"
+    },
+
+    {
+        id:"back",
+        name:"عضلات الظهر",
+        icon:"🦾"
+    },
+
+    {
+        id:"shoulders",
+        name:"عضلات الأكتاف",
+        icon:"🏋️"
+    },
+
+    {
+        id:"arms",
+        name:"عضلات الذراع",
+        icon:"💪"
+    },
+
+    {
+        id:"legs",
+        name:"عضلات الأرجل",
+        icon:"🦵"
+    },
+
+    {
+        id:"forearms",
+        name:"عضلات السواعد",
+        icon:"✊"
+    },
+
+    {
+        id:"abs",
+        name:"عضلات البطن",
+        icon:"🔥"
+    }
+
+];
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+function saveDevices(){
+
+    localStorage.setItem(
+        DEVICES_KEY,
+        JSON.stringify(devices)
+    );
+
+}
+
+
+function saveAttendance(){
+
+    localStorage.setItem(
+        ATTENDANCE_KEY,
+        JSON.stringify(attendance)
+    );
+
+}
+
+
+/* =========================================================
+   GENERATE ID
+========================================================= */
+
+function generateID(){
+
+    return Date.now().toString(36) +
+        Math.random()
+            .toString(36)
+            .substring(2);
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderAll(){
+
+    const container =
+        document.getElementById("categories");
+
+    container.innerHTML = "";
+
+
+    const search =
+        document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    categories.forEach(category => {
+
+        if(
+            activeFilter !== "all" &&
+            activeFilter !== category.id
+        ){
+            return;
+        }
+
+
+        let categoryDevices =
+            devices.filter(
+                device =>
+                    device.category === category.id
+            );
+
+
+        if(search){
+
+            categoryDevices =
+                categoryDevices.filter(device =>
+
+                    device.name
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    (
+                        device.description || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                );
+
+        }
+
+
+        const section =
+            document.createElement("section");
+
+        section.className = "category";
+
+
+        section.innerHTML = `
+
+            <div class="category-header">
+
+                <div class="category-title">
+
+                    <div class="category-icon">
+                        ${category.icon}
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            ${category.name}
+                        </h3>
+
+                        <div class="category-count">
+                            ${categoryDevices.length} جهاز
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="add-btn"
+                    onclick="openAddDevice('${category.id}')"
+                >
+                    ＋ إضافة جهاز
+                </button>
+
+            </div>
+
+
+            <div class="devices">
+
+                ${
+                    categoryDevices.length
+
+                    ?
+
+                    categoryDevices
+                        .map(
+                            device =>
+                                createDeviceCard(device)
+                        )
+                        .join("")
+
+                    :
+
+                    `
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🏋️
+                        </div>
+
+                        <div>
+                            لا يوجد أجهزة مضافة
+                        </div>
+
+                        <button
+                            class="add-btn"
+                            onclick="openAddDevice('${category.id}')"
+                        >
+                            + أضف أول جهاز
+                        </button>
+
+                    </div>
+
+                    `
+                }
+
+            </div>
+
+        `;
+
+
+        container.appendChild(section);
+
+    });
+
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   DEVICE CARD
+========================================================= */
+
+function createDeviceCard(device){
+
+    const image =
+        device.image
+
+        ?
+
+        `
+        <img
+            src="${device.image}"
+            alt="${escapeHTML(device.name)}"
+        >
+        `
+
+        :
+
+        `
+        <div class="no-image">
+
+            <span>📷</span>
+
+            <small>
+                لا توجد صورة
+            </small>
+
+        </div>
+        `;
+
+
+    return `
+
+        <article class="device-card">
+
+            <div class="device-image">
+
+                ${image}
+
+
+                <div class="device-actions">
+
+                    <button
+                        class="icon-btn"
+                        onclick="editDevice('${device.id}')"
+                    >
+                        ✏️
+                    </button>
+
+                    <button
+                        class="icon-btn"
+                        onclick="deleteDevice('${device.id}')"
+                    >
+                        🗑️
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="device-body">
+
+                <h4 class="device-name">
+                    ${escapeHTML(device.name)}
+                </h4>
+
+
+                <p class="device-description">
+                    ${
+                        escapeHTML(
+                            device.description ||
+                            "لا يوجد وصف"
+                        )
+                    }
+                </p>
+
+
+                <div class="inputs-grid">
+
+                    <div class="input-box">
+
+                        <label>
+                            Sets الحالي
+                        </label>
+
+                        <input
+                            type="number"
+                            min="0"
+                            value="${device.sets || 0}"
+                            onchange="
+                                updateDeviceValue(
+                                    '${device.id}',
+                                    'sets',
+                                    this.value
+                                )
+                            "
+                        >
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <label>
+                            KG الحالي
+                        </label>
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            value="${device.weight || 0}"
+                            onchange="
+                                updateDeviceValue(
+                                    '${device.id}',
+                                    'weight',
+                                    this.value
+                                )
+                            "
+                        >
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <label>
+                            Reps الحالي
+                        </label>
+
+                        <input
+                            type="number"
+                            min="0"
+                            value="${device.reps || 0}"
+                            onchange="
+                                updateDeviceValue(
+                                    '${device.id}',
+                                    'reps',
+                                    this.value
+                                )
+                            "
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- RECORD NEW WORKOUT -->
+
+                <button
+                    class="history-button"
+                    onclick="openWorkoutModal('${device.id}')"
+                >
+                    ➕ سجل تمرين اليوم
+                </button>
+
+
+                <!-- VIEW HISTORY -->
+
+                <button
+                    class="history-button"
+                    onclick="openHistory('${device.id}')"
+                >
+                    📅 تاريخ تمارين الجهاز
+                    ${
+                        (device.workouts || []).length
+                    }
+                </button>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =========================================================
+   ADD DEVICE
+========================================================= */
+
+function openAddDevice(category){
+
+    editingDeviceId = null;
+    currentImage = "";
+
+    document.getElementById("modalTitle")
+        .textContent =
+        "إضافة جهاز جديد";
+
+    document.getElementById("deviceName")
+        .value = "";
+
+    document.getElementById("deviceDescription")
+        .value = "";
+
+    document.getElementById("deviceCategory")
+        .value = category;
+
+    document.getElementById("deviceImage")
+        .value = "";
+
+    hidePreview();
+
+    document.getElementById("deviceModal")
+        .classList.add("show");
+
+}
+
+
+/* =========================================================
+   EDIT DEVICE
+========================================================= */
+
+function editDevice(id){
+
+    const device =
+        devices.find(
+            item => item.id === id
+        );
+
+    if(!device) return;
+
+
+    editingDeviceId = id;
+
+    currentImage =
+        device.image || "";
+
+
+    document.getElementById("modalTitle")
+        .textContent =
+        "تعديل الجهاز";
+
+
+    document.getElementById("deviceName")
+        .value =
+        device.name;
+
+
+    document.getElementById("deviceDescription")
+        .value =
+        device.description || "";
+
+
+    document.getElementById("deviceCategory")
+        .value =
+        device.category;
+
+
+    if(currentImage){
+
+        document.getElementById("previewImg")
+            .src =
+            currentImage;
+
+        document.getElementById("imagePreview")
+            .style.display =
+            "block";
+
+    }else{
+
+        hidePreview();
+
+    }
+
+
+    document.getElementById("deviceModal")
+        .classList.add("show");
+
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+document
+    .getElementById("deviceImage")
+    .addEventListener(
+        "change",
+        function(e){
+
+            const file =
+                e.target.files[0];
+
+            if(!file) return;
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(event){
+
+                    compressImage(
+                        event.target.result,
+                        function(result){
+
+                            currentImage =
+                                result;
+
+                            document
+                                .getElementById("previewImg")
+                                .src =
+                                result;
+
+                            document
+                                .getElementById("imagePreview")
+                                .style.display =
+                                "block";
+
+                        }
+                    );
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+function compressImage(source,callback){
+
+    const img = new Image();
+
+
+    img.onload = function(){
+
+        const MAX = 1000;
+
+        let width = img.width;
+        let height = img.height;
+
+
+        if(
+            width > MAX ||
+            height > MAX
+        ){
+
+            if(width > height){
+
+                height =
+                    height * MAX / width;
+
+                width = MAX;
+
+            }else{
+
+                width =
+                    width * MAX / height;
+
+                height = MAX;
+
+            }
+
+        }
+
+
+        const canvas =
+            document.createElement("canvas");
+
+        canvas.width = width;
+        canvas.height = height;
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+        );
+
+
+        callback(
+            canvas.toDataURL(
+                "image/jpeg",
+                .82
+            )
+        );
+
+    };
+
+
+    img.src = source;
+
+}
+
+
+function removeImage(){
+
+    currentImage = "";
+
+    document.getElementById("deviceImage")
+        .value = "";
+
+    hidePreview();
+
+}
+
+
+function hidePreview(){
+
+    document.getElementById("imagePreview")
+        .style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   SAVE DEVICE
+========================================================= */
+
+function saveDevice(){
+
+    const name =
+        document.getElementById("deviceName")
+            .value
+            .trim();
+
+
+    if(!name){
+
+        showToast(
+            "اكتب اسم الجهاز أولاً"
+        );
+
+        return;
+    }
+
+
+    if(editingDeviceId){
+
+        const device =
+            devices.find(
+                item =>
+                    item.id === editingDeviceId
+            );
+
+
+        if(device){
+
+            device.name =
+                name;
+
+            device.description =
+                document
+                    .getElementById("deviceDescription")
+                    .value
+                    .trim();
+
+            device.category =
+                document
+                    .getElementById("deviceCategory")
+                    .value;
+
+            device.image =
+                currentImage;
+
+        }
+
+
+        showToast(
+            "تم تعديل الجهاز"
+        );
+
+    }else{
+
+        devices.push({
+
+            id:generateID(),
+
+            name:name,
+
+            category:
+                document
+                    .getElementById("deviceCategory")
+                    .value,
+
+            description:
+                document
+                    .getElementById("deviceDescription")
+                    .value
+                    .trim(),
+
+            image:currentImage,
+
+            sets:0,
+
+            weight:0,
+
+            reps:0,
+
+            workouts:[]
+
+        });
+
+
+        showToast(
+            "تمت إضافة الجهاز"
+        );
+
+    }
+
+
+    saveDevices();
+
+    closeDeviceModal();
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   UPDATE CURRENT VALUES
+========================================================= */
+
+function updateDeviceValue(
+    id,
+    field,
+    value
+){
+
+    const device =
+        devices.find(
+            item => item.id === id
+        );
+
+    if(!device) return;
+
+
+    device[field] =
+        Number(value) || 0;
+
+
+    saveDevices();
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   DELETE DEVICE
+========================================================= */
+
+function deleteDevice(id){
+
+    const device =
+        devices.find(
+            item => item.id === id
+        );
+
+    if(!device) return;
+
+
+    if(
+        !confirm(
+            `هل تريد حذف جهاز "${device.name}" وكل سجل تمارينه؟`
+        )
+    ){
+        return;
+    }
+
+
+    devices =
+        devices.filter(
+            item => item.id !== id
+        );
+
+
+    saveDevices();
+
+    renderAll();
+
+    showToast(
+        "تم حذف الجهاز"
+    );
+
+}
+
+
+/* =========================================================
+   DELETE ALL
+========================================================= */
+
+function deleteAllDevices(){
+
+    if(!devices.length){
+
+        showToast(
+            "لا توجد أجهزة"
+        );
+
+        return;
+    }
+
+
+    if(
+        !confirm(
+            "سيتم حذف كل الأجهزة وكل سجلات التمارين. هل أنت متأكد؟"
+        )
+    ){
+        return;
+    }
+
+
+    devices = [];
+
+    saveDevices();
+
+    renderAll();
+
+    showToast(
+        "تم حذف كل الأجهزة"
+    );
+
+}
+
+
+/* =========================================================
+   WORKOUT MODAL
+========================================================= */
+
+function openWorkoutModal(id){
+
+    const device =
+        devices.find(
+            item => item.id === id
+        );
+
+    if(!device) return;
+
+
+    selectedWorkoutDeviceId =
+        id;
+
+
+    document.getElementById("workoutDeviceName")
+        .textContent =
+        "🏋️ " + device.name;
+
+
+    document.getElementById("workoutSets")
+        .value =
+        device.sets || 4;
+
+
+    document.getElementById("workoutWeight")
+        .value =
+        device.weight || 0;
+
+
+    document.getElementById("workoutReps")
+        .value =
+        device.reps || 5;
+
+
+    document.getElementById("workoutModal")
+        .classList.add("show");
+
+}
+
+
+/* =========================================================
+   SAVE WORKOUT
+========================================================= */
+
+function saveWorkout(){
+
+    const device =
+        devices.find(
+            item =>
+                item.id ===
+                selectedWorkoutDeviceId
+        );
+
+
+    if(!device) return;
+
+
+    if(!device.workouts){
+
+        device.workouts = [];
+
+    }
+
+
+    const sets =
+        Number(
+            document.getElementById("workoutSets")
+                .value
+        ) || 0;
+
+
+    const weight =
+        Number(
+            document.getElementById("workoutWeight")
+                .value
+        ) || 0;
+
+
+    const reps =
+        Number(
+            document.getElementById("workoutReps")
+                .value
+        ) || 0;
+
+
+    const now =
+        new Date();
+
+
+    device.workouts.unshift({
+
+        id:generateID(),
+
+        sets:sets,
+
+        weight:weight,
+
+        reps:reps,
+
+        date:now.toISOString()
+
+    });
+
+
+    /*
+        نخلي آخر تمرين هو القيم الحالية
+    */
+
+    device.sets = sets;
+    device.weight = weight;
+    device.reps = reps;
+
+
+    saveDevices();
+
+    closeWorkoutModal();
+
+    renderAll();
+
+    showToast(
+        "تم حفظ تمرين اليوم بتاريخ ووقت"
+    );
+
+}
+
+
+/* =========================================================
+   WORKOUT HISTORY
+========================================================= */
+
+function openHistory(id){
+
+    const device =
+        devices.find(
+            item => item.id === id
+        );
+
+    if(!device) return;
+
+
+    historyDeviceId =
+        id;
+
+
+    document.getElementById("historyTitle")
+        .textContent =
+        "📅 سجل: " + device.name;
+
+
+    renderWorkoutHistory();
+
+
+    document.getElementById("historyModal")
+        .classList.add("show");
+
+}
+
+
+function renderWorkoutHistory(){
+
+    const device =
+        devices.find(
+            item => item.id === historyDeviceId
+        );
+
+
+    if(!device) return;
+
+
+    const list =
+        document.getElementById(
+            "workoutHistoryList"
+        );
+
+
+    const workouts =
+        device.workouts || [];
+
+
+    if(!workouts.length){
+
+        list.innerHTML = `
+
+            <div class="no-history">
+
+                📭
+
+                <br><br>
+
+                لا يوجد سجل تمارين لهذا الجهاز حتى الآن.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        workouts.map(
+            workout => `
+
+                <div class="workout-history-item">
+
+                    <div class="workout-history-top">
+
+                        <strong>
+                            تمرين
+                        </strong>
+
+                        <span class="workout-date">
+                            ${formatDateTime(workout.date)}
+                        </span>
+
+                    </div>
+
+
+                    <div class="workout-values">
+
+                        <div class="workout-value">
+
+                            <small>
+                                Sets
+                            </small>
+
+                            ${workout.sets}
+
+                        </div>
+
+
+                        <div class="workout-value">
+
+                            <small>
+                                Weight
+                            </small>
+
+                            ${workout.weight} KG
+
+                        </div>
+
+
+                        <div class="workout-value">
+
+                            <small>
+                                Reps
+                            </small>
+
+                            ${workout.reps}
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="delete-history"
+                        onclick="
+                            deleteWorkout(
+                                '${workout.id}'
+                            )
+                        "
+                    >
+                        🗑️ حذف هذا التمرين
+                    </button>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =========================================================
+   DELETE WORKOUT
+========================================================= */
+
+function deleteWorkout(id){
+
+    const device =
+        devices.find(
+            item =>
+                item.id === historyDeviceId
+        );
+
+
+    if(!device) return;
+
+
+    if(
+        !confirm(
+            "هل تريد حذف هذا السجل؟"
+        )
+    ){
+        return;
+    }
+
+
+    device.workouts =
+        (device.workouts || [])
+            .filter(
+                item =>
+                    item.id !== id
+            );
+
+
+    saveDevices();
+
+    renderWorkoutHistory();
+
+    renderAll();
+
+    showToast(
+        "تم حذف سجل التمرين"
+    );
+
+}
+
+
+/* =========================================================
+   MODAL CLOSE
+========================================================= */
+
+function closeDeviceModal(){
+
+    document.getElementById("deviceModal")
+        .classList.remove("show");
+
+    editingDeviceId = null;
+
+    currentImage = "";
+
+}
+
+
+function closeWorkoutModal(){
+
+    document.getElementById("workoutModal")
+        .classList.remove("show");
+
+    selectedWorkoutDeviceId = null;
+
+}
+
+
+function closeHistoryModal(){
+
+    document.getElementById("historyModal")
+        .classList.remove("show");
+
+    historyDeviceId = null;
+
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDateTime(date){
+
+    return new Date(date)
+        .toLocaleString(
+            "ar-IQ",
+            {
+                year:"numeric",
+                month:"2-digit",
+                day:"2-digit",
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+    document.getElementById("totalDevices")
+        .textContent =
+        devices.length;
+
+
+    const sets =
+        devices.reduce(
+            (sum,d) =>
+                sum +
+                Number(d.sets || 0),
+            0
+        );
+
+
+    const reps =
+        devices.reduce(
+            (sum,d) =>
+                sum +
+                Number(d.reps || 0),
+            0
+        );
+
+
+    const weight =
+        devices.reduce(
+            (sum,d) =>
+                sum +
+                Number(d.weight || 0),
+            0
+        );
+
+
+    document.getElementById("totalSets")
+        .textContent =
+        sets;
+
+
+    document.getElementById("totalReps")
+        .textContent =
+        reps;
+
+
+    document.getElementById("totalWeight")
+        .textContent =
+        weight;
+
+}
+
+
+/* =========================================================
+   STREAK SYSTEM
+=========================================================
+
+RULES:
+
+1. يمكن تسجيل حضور مرة كل 12 ساعة.
+2. إذا مر أكثر من 24 ساعة منذ آخر حضور
+   يرجع الـStreak إلى 0.
+3. إذا سجلت حضور بعد أقل من 24 ساعة
+   يزيد الـStreak.
+4. أعلى Streak يبقى محفوظ.
+
+========================================================= */
+
+function calculateStreak(){
+
+    if(!attendance.length){
+
+        return {
+            streak:0,
+            best:0
+        };
+
+    }
+
+
+    const sorted =
+        [...attendance]
+            .sort(
+                (a,b) =>
+                    new Date(a.date) -
+                    new Date(b.date)
+            );
+
+
+    let streak = 0;
+    let best = 0;
+
+    let previous = null;
+
+
+    sorted.forEach(item => {
+
+        const current =
+            new Date(item.date)
+                .getTime();
+
+
+        if(!previous){
+
+            streak = 1;
+
+        }else{
+
+            const diff =
+                current -
+                previous;
+
+
+            const hours =
+                diff /
+                (1000 * 60 * 60);
+
+
+            if(hours <= 24){
+
+                streak++;
+
+            }else{
+
+                streak = 1;
+
+            }
+
+        }
+
+
+        if(streak > best){
+
+            best = streak;
+
+        }
+
+
+        previous = current;
+
+    });
+
+
+    const last =
+        new Date(
+            sorted[sorted.length - 1].date
+        );
+
+
+    const hoursSinceLast =
+        (
+            Date.now() -
+            last.getTime()
+        )
+        /
+        (1000 * 60 * 60);
+
+
+    /*
+        إذا مر أكثر من 24 ساعة
+        نعتبر الـStreak الحالي صفر
+    */
+
+    if(hoursSinceLast > 24){
+
+        streak = 0;
+
+    }
+
+
+    return {
+        streak,
+        best
+    };
+
+}
+
+
+/* =========================================================
+   ATTENDANCE BUTTON
+========================================================= */
+
+function markAttendance(){
+
+    const now =
+        Date.now();
+
+
+    if(attendance.length){
+
+        const last =
+            new Date(
+                attendance[0].date
+            )
+            .getTime();
+
+
+        const hours =
+            (
+                now - last
+            )
+            /
+            (1000 * 60 * 60);
+
+
+        /*
+            ممنوع الضغط قبل مرور 12 ساعة
+        */
+
+        if(hours < 12){
+
+            const remaining =
+                Math.ceil(
+                    12 - hours
+                );
+
+            showToast(
+                `لا يمكنك تسجيل حضور جديد الآن. باقي تقريباً ${remaining} ساعة.`
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    /*
+        أضف الحضور
+    */
+
+    attendance.unshift({
+
+        id:generateID(),
+
+        date:
+            new Date()
+                .toISOString()
+
+    });
+
+
+    saveAttendance();
+
+    updateStreakUI();
+
+    showToast(
+        "تم تسجيل حضورك 💪🔥"
+    );
+
+}
+
+
+/* =========================================================
+   STREAK UI
+========================================================= */
+
+function updateStreakUI(){
+
+    const result =
+        calculateStreak();
+
+
+    document.getElementById("streakNumber")
+        .textContent =
+        result.streak;
+
+
+    document.getElementById("bestStreak")
+        .textContent =
+        "أعلى Streak: " +
+        result.best;
+
+
+    const button =
+        document.getElementById(
+            "attendanceBtn"
+        );
+
+
+    const info =
+        document.getElementById(
+            "streakInfo"
+        );
+
+
+    if(attendance.length){
+
+        const last =
+            new Date(
+                attendance[0].date
+            );
+
+
+        const hours =
+            (
+                Date.now() -
+                last.getTime()
+            )
+            /
+            (1000 * 60 * 60);
+
+
+        if(hours < 12){
+
+            const remaining =
+                Math.ceil(
+                    12 - hours
+                );
+
+
+            button.disabled = true;
+
+            button.classList.add(
+                "disabled"
+            );
+
+
+            button.textContent =
+                "✓ تم الحضور";
+
+
+            info.textContent =
+                `آخر حضور: ${formatDateTime(last)}
+                — يمكنك تسجيل الحضور القادم بعد حوالي ${remaining} ساعة.`;
+
+        }else{
+
+            button.disabled = false;
+
+            button.classList.remove(
+                "disabled"
+            );
+
+
+            button.textContent =
+                "حاضر 💪";
+
+
+            if(hours > 24){
+
+                info.textContent =
+                    "مر أكثر من 24 ساعة منذ آخر حضور، لذلك الـStreak الحالي أصبح 0. سجل حضورك الآن للبدء من جديد.";
+
+            }else{
+
+                info.textContent =
+                    "يمكنك تسجيل حضورك الآن.";
+
+            }
+
+        }
+
+    }else{
+
+        button.disabled = false;
+
+        button.classList.remove(
+            "disabled"
+        );
+
+        button.textContent =
+            "حاضر 💪";
+
+        info.textContent =
+            "اضغط حاضر عند وصولك للجيم لبدء الـStreak.";
+
+    }
+
+
+    renderAttendanceHistory();
+
+}
+
+
+/* =========================================================
+   ATTENDANCE HISTORY
+========================================================= */
+
+function renderAttendanceHistory(){
+
+    const container =
+        document.getElementById(
+            "attendanceHistory"
+        );
+
+
+    document.getElementById(
+        "attendanceCount"
+    ).textContent =
+        attendance.length;
+
+
+    if(!attendance.length){
+
+        container.innerHTML = `
+
+            <div
+                style="
+                    color:#687786;
+                    text-align:center;
+                    padding:25px;
+                "
+            >
+                لا يوجد سجل حضور حتى الآن.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        attendance
+            .slice(0,30)
+            .map(
+                (item,index) => {
+
+                    const date =
+                        new Date(
+                            item.date
+                        );
+
+
+                    return `
+
+                        <div class="history-item">
+
+                            <span class="history-date">
+
+                                ${
+                                    index === 0
+                                    ? "🔥 "
+                                    : ""
+                                }
+
+                                ${formatDateTime(date)}
+
+                            </span>
+
+
+                            <span class="history-time">
+                                حاضر ✓
+                            </span>
+
+                        </div>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+document
+    .querySelectorAll(".filter-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                document
+                    .querySelectorAll(".filter-btn")
+                    .forEach(
+                        btn =>
+                            btn.classList
+                                .remove("active")
+                    );
+
+
+                this.classList.add("active");
+
+
+                activeFilter =
+                    this.dataset.filter;
+
+
+                renderAll();
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            3000
+        );
+
+}
+
+
+/* =========================================================
+   CLOSE MODALS WHEN CLICK OUTSIDE
+========================================================= */
+
+[
+    "deviceModal",
+    "workoutModal",
+    "historyModal"
+]
+.forEach(id => {
+
+    document
+        .getElementById(id)
+        .addEventListener(
+            "click",
+            function(e){
+
+                if(
+                    e.target ===
+                    document.getElementById(id)
+                ){
+
+                    if(id === "deviceModal")
+                        closeDeviceModal();
+
+                    if(id === "workoutModal")
+                        closeWorkoutModal();
+
+                    if(id === "historyModal")
+                        closeHistoryModal();
+
+                }
+
+            }
+        );
+
+});
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+renderAll();
+
+updateStreakUI();
+
+
+/*
+    فحص الـStreak كل دقيقة
+    حتى إذا مرّت 24 ساعة يتحدث تلقائياً
+*/
+
+setInterval(
+    updateStreakUI,
+    60000
+);
+
+</script>
+
+
+</body></html>
